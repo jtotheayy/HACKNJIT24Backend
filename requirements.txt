@@ -1,2 +1,6 @@
 sqlalchemy==2.0.20
 flask==2.3.2
+Flask-SQLAlchemy 
+Flask-JWT-Extended 
+psycopg2-binary 
+python-dotenv
