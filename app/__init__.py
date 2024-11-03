@@ -2,8 +2,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
+from app.routes import book_bp
 import os
 
+app.register_blueprint(book_bp)
 load_dotenv()
 
 db = SQLAlchemy()

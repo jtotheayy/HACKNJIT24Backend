@@ -5,8 +5,35 @@ from . import db
 from .models import User, Book, Review, JournalEntry
 from .auth import hash_password, verify_password, generate_token
 from . import create_app
+from .nyt_client import fetch_books_from_nyt
 
 app = create_app()
+
+
+def populate_books(list_name="hardcover-fiction"):
+    # Fetch books from NYT API
+    books = fetch_books_from_nyt(list_name)
+    if not books:
+        return jsonify({"error": "No books found"}), 404
+
+    for book in books:
+        new_book = Book(
+            title=book["title"],
+            author=book["author"],
+            description=book.get("description", "No description available"),
+            genre=book.get("primary_isbn13", ""),  # Could use ISBN for a unique genre field
+            average_rating=0.0  # Set to 0, or update if you have a rating system
+        )
+        db.session.add(new_book)
+    
+    db.session.commit()
+    return jsonify({"message": "Books added to the database"}), 200
+
+book_bp = Blueprint("book_bp", __name__)
+
+@book_bp.route("/populate_books", methods=["POST"])
+def populate_books_route():
+    return populate_books(list_name="hardcover-fiction")
 
 @app.route("/signup", methods=["POST"])
 def signup():
