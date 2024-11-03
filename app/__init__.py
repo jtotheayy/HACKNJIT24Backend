@@ -2,10 +2,9 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
-from app.routes import book_bp
 import os
 
-app.register_blueprint(book_bp)
+
 load_dotenv()
 
 db = SQLAlchemy()
@@ -22,6 +21,9 @@ def create_app():
 
     with app.app_context():
         from . import routes
+        from .routes import book_bp
+        app.register_blueprint(book_bp)
+
         db.create_all()  # Create database tables
 
     return app
