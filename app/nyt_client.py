@@ -1,18 +1,18 @@
-# nyt_client.py
 import os
+import time
 import requests
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# Environment Variables
 NYT_BOOKS_API_KEY = os.getenv("NYT_BOOKS_API_KEY")
 NYT_BOOKS_API_URL = "https://api.nytimes.com/svc/books/v3/lists/"
+MAX_RETRIES = 1
+INITIAL_DELAY = 1  # Starting delay in seconds
 
 def fetch_all_list_names():
     url = f"{NYT_BOOKS_API_URL}names.json"
     params = {"api-key": NYT_BOOKS_API_KEY}
-
     response = requests.get(url, params=params)
     if response.status_code == 200:
         lists = response.json().get("results", [])
@@ -33,4 +33,3 @@ def fetch_books_from_nyt(list_name):
     else:
         print(f"Failed to fetch books: {response.status_code}")
         return []
-

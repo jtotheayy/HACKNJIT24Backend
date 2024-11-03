@@ -8,7 +8,6 @@ from .nyt_client import fetch_all_list_names
 
 book_bp = Blueprint("book_bp", __name__)
 
-
 @book_bp.route("/populate_books", methods=["POST"])
 def populate_books_route():
     # Step 1: Fetch all list names
@@ -42,6 +41,7 @@ def populate_books_route():
 
     db.session.commit()
     return jsonify({"message": f"{total_books_added} books added to the database"}), 200
+
     
 
 @book_bp.route("/signup", methods=["POST"])
