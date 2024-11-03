@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+### Environment Variables
 NYT_BOOKS_API_KEY = os.getenv("NYT_BOOKS_API_KEY")
 NYT_BOOKS_API_URL = "https://api.nytimes.com/svc/books/v3/lists/current/"
 
